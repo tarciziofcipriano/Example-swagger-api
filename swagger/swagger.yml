@@ -1,0 +1,161 @@
+swagger: "2.0"
+info:
+  description: "Exemplo básico de swagger."
+  version: "1.0.0"
+  title: "SWAGGER USER API"
+host: "localhost:3000"
+basePath: "/list"
+
+tags:
+  - name: "Users"
+
+paths:
+  /users/user:
+    get:
+      summary: "Retorna lista de usuários cadastrados"
+      tags:
+        - "Users"
+
+      responses:
+        200:
+          description: "Retorna lista de usuários cadastrados"
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Users"
+
+    post:
+      summary: "Cadastro de novo usuário"
+      tags:
+        - "Users"
+
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/AddUser"
+
+      responses:
+        200:
+          description: "Cadastro de novo usuário"
+
+    put:
+      summary: "Edição de usuário"
+      tags:
+        - "Users"
+
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/Users"
+
+      responses:
+        200:
+          description: "Edição de usuário"
+
+    delete:
+      summary: "Deletar usuário"
+      tags:
+        - "Users"
+
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/DeleteUser"
+
+      responses:
+        200:
+          description: "Deletar usuário"
+
+  /users/login:
+    post:
+      summary: "Login de usuário"
+      tags:
+        - "Users"
+
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/Login"
+
+      responses:
+        200:
+          description: "Login de usuário"
+
+  /users/logout:
+    post:
+      summary: "Logout de usuário"
+      tags:
+        - "Users"
+
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/Logout"
+
+      responses:
+        200:
+          description: "Logout de usuário"
+
+definitions:
+  OnOff:
+    type: number
+    minimum: 0
+    maximum: 1
+
+  Users:
+    type: object
+    properties:
+      username:
+        type: number
+      acess-type:
+        type: number
+        minimum: 0
+        maximum: 3
+      state:
+        $ref: "#/definitions/OnOff"
+      idx:
+        type: number
+
+  AddUser:
+    type: object
+    properties:
+      username:
+        type: number
+      acess-type:
+        type: number
+        minimum: 0
+        maximum: 3
+      state:
+        $ref: "#/definitions/OnOff"
+      password:
+        type: string
+
+  DeleteUser:
+    type: object
+    properties:
+      idx:
+        type: number
+
+  Login:
+    type: object
+    properties:
+      username:
+        type: string
+      userpass:
+        type: string
+
+  Logout:
+    type: object
+    properties:
+      token:
+        type: string
